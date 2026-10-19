@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "instance_name" {
   description = "Value of the EC2 instance's Name tag"
   type        = string
-  default     = "sandbox"
+  default     = "learn-terraform"
 }
 
 variable "instance_type" {
