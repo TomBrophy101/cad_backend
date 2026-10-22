@@ -24,7 +24,7 @@ data "aws_ssm_parameter" "ubuntu_ami" {
 
 # Create a Security Group to allow HTTP (80) and SSH (22) traffic
 resource "aws_security_group" "server_sg" {
-  name        = "server-allow-http"
+  name_prefix = "server-allow-http"
   description = "Allow inbound HTTP and SSH traffic"
 
   ingress {
