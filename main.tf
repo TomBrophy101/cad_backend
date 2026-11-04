@@ -70,7 +70,7 @@ resource "aws_instance" "server" {
 }
 
 # Creates an elastic IP address and associates it with the backend server 
-resource "aws-eip" "server_eip" {
+resource "aws_eip" "server_eip" {
   instance = aws_instance.app_server.id
   domain = "vpc"
 }
