@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import or_
 import models
 import schemas
 from database import SessionLocal, engine
@@ -25,6 +26,10 @@ def get_db():
         yield db
     finally:
         db.close()
+
+@app.get("/")
+def root():
+    return {"message": "Welcome to the FastAPI application!"}
 
 
 @app.post("/items/", response_model=schemas.Item)
@@ -79,3 +84,13 @@ def delete_item(item_id: int, db: Session = Depends(get_db)):
     db.delete(item)
     db.commit()
     return {"message": "Item deleted successfully"}
+
+@app.get("/search/{query}", response_model=list[schemas.Item])
+def search_items(query: str, db: Session = Depends(get_db)):
+    items = db.query(models.Item).filter(
+        or_(
+            models.Item.name.ilike(f"%{query}%"),
+            models.Item.description.ilike(f"%{query}%")
+        )
+    ).all()
+    return items
