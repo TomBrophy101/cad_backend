@@ -3,10 +3,14 @@ import string
 from fastapi.testclient import TestClient
 from backend.main import app
 
+
 client = TestClient(app)
 
+
 def random_string(length=8):
-    return "".join(random.choices(string.ascii_letters + string.digits, k=length))
+    chars = string.ascii_lowercase
+    return "".join(random.choices(chars, k=length))
+
 
 test_payload = {
     "name": random_string(),
@@ -14,11 +18,12 @@ test_payload = {
     "price": 123.45,
 }
 
+
 def test_create_item():
     # Create item
     response = client.post("/items", json=test_payload)
     assert response.status_code == 200
-    #
+
     # Check response
     data = response.json()
     assert data["name"] == test_payload["name"]
