@@ -97,7 +97,6 @@ def search_items(query: str, db: Session = Depends(get_db)):
         or_(
             models.Item.username.ilike(f"%{query}%"),
             models.Item.email.ilike(f"%{query}%"),
-            models.Item.password.ilike(f"%{query}%")
         )
     ).all()
     return items

@@ -13,7 +13,6 @@ def random_string(length=8):
 
 
 test_payload = {
-    "id": random.randint(1, 100000),
     "username": random_string(),
     "email": f"{random_string()}@example.com",
     "password": random_string(length=12),
@@ -21,13 +20,11 @@ test_payload = {
 
 
 def test_create_item():
-    # Create item
     response = client.post("/items/", json=test_payload)
     assert response.status_code == 200
 
-    # Check response
     data = response.json()
-    assert data["id"] == test_payload["id"]
+    assert isinstance(data["id"], int)
     assert data["username"] == test_payload["username"]
     assert data["email"] == test_payload["email"]
     assert data["password"] == test_payload["password"]
