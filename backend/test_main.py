@@ -14,9 +14,9 @@ def random_string(length=8):
 
 test_payload = {
     "id": random.randint(1, 100000),
-    "name": random_string(),
-    "description": "This is a test item",
-    "price": 123.45,
+    "username": random_string(),
+    "email": f"{random_string()}@example.com",
+    "password": random_string(length=12),
 }
 
 
@@ -28,6 +28,6 @@ def test_create_item():
     # Check response
     data = response.json()
     assert data["id"] == test_payload["id"]
-    assert data["name"] == test_payload["name"]
-    assert data["description"] == test_payload["description"]
-    assert data["price"] == str(test_payload["price"])
+    assert data["username"] == test_payload["username"]
+    assert data["email"] == test_payload["email"]
+    assert data["password"] == test_payload["password"]

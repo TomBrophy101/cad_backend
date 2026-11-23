@@ -7,6 +7,6 @@ class Item(Base):
 
     # primary_key=True automatically makes this column auto-increment in SQLite
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True, unique=True)
-    description = Column(String, index=True)
-    price = Column(Numeric(10, 2), nullable=False)
+    username = Column(String, index=True, unique=True)
+    email = Column(String, index=True, unique=True)
+    password = Column(String, nullable=False)

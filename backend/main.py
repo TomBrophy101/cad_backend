@@ -13,7 +13,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:5174", "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,7 +44,7 @@ def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(
-            status_code=400, detail="Item with this name already exists")
+            status_code=400, detail="Item with this username or email already exists")
 
 
 @app.get("/items/", response_model=list[schemas.Item])
@@ -91,8 +91,9 @@ def delete_item(item_id: int, db: Session = Depends(get_db)):
 def search_items(query: str, db: Session = Depends(get_db)):
     items = db.query(models.Item).filter(
         or_(
-            models.Item.name.ilike(f"%{query}%"),
-            models.Item.description.ilike(f"%{query}%"),
+            models.Item.username.ilike(f"%{query}%"),
+            models.Item.email.ilike(f"%{query}%"),
+            models.Item.password.ilike(f"%{query}%")
         )
     ).all()
     return items
