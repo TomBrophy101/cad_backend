@@ -36,3 +36,4 @@ jobs:
         DATABASE_URL: sqlite:///./test.db
       run: |
         pytest -v backend/
+
